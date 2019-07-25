@@ -537,7 +537,10 @@ RCT_EXPORT_MODULE()
             NSString *name = [descriptionData valueForKey:@"name"];
             NSString *email = [descriptionData valueForKey:@"email"];
             NSString *phone = [descriptionData valueForKey:@"phone"];
-
+            NSString *status = [descriptionData valueForKey:@"status"];
+            NSString *role = [descriptionData valueForKey:@"role"];
+            NSString *type = [descriptionData valueForKey:@"type"];
+            
             if(email && ![email isEqualToString:@"(null)"]) {
                 [formattedAttendee setValue:email forKey:@"email"];
             }
@@ -556,6 +559,26 @@ RCT_EXPORT_MODULE()
             else {
                 [formattedAttendee setValue:@"" forKey:@"name"];
             }
+            if(status && ![status isEqualToString:@"(null)"]) {
+                [formattedAttendee setValue:status forKey:@"status"];
+            }
+            else {
+                [formattedAttendee setValue:@"" forKey:@"status"];
+            }
+            if(role && ![role isEqualToString:@"(null)"]) {
+                [formattedAttendee setValue:role forKey:@"role"];
+            }
+            else {
+                [formattedAttendee setValue:@"" forKey:@"role"];
+            }
+            if(type && ![type isEqualToString:@"(null)"]) {
+                NSString* cleanedType = [type stringByReplacingOccurrencesOfString:@"}" withString:@""];
+                [formattedAttendee setValue:cleanedType forKey:@"type"];
+            }
+            else {
+                [formattedAttendee setValue:@"" forKey:@"type"];
+            }
+            
             [attendees addObject:formattedAttendee];
         }
         [formedCalendarEvent setValue:attendees forKey:_attendees];
